@@ -1,3 +1,6 @@
+import 
+
+
 # Set up providers
 
 terraform {
@@ -24,6 +27,12 @@ provider "cloudflare" {
 
 
 # Variables
+
+variable "enable_custom_domain" {
+    description = "Enable or disable custom domain for storage account"
+    type        = bool
+    default     = false
+}
 
 variable "zone_id" {
     description = "Cloudflare Zone ID"
@@ -56,7 +65,7 @@ variable "website_sa_name" {
 }
 
 
-# Storage account setup
+# Website storage account and container settings
 
 resource "azurerm_resource_group" "website" {
     name     = var.website_rg_name
@@ -70,9 +79,12 @@ resource "azurerm_storage_account" "storage" {
     account_tier             = "Standard"
     account_replication_type = "LRS"
 
-    custom_domain {
-        name          = var.domain
-        use_subdomain = true
+    dynamic "custom_domain" {
+        for_each = var.enable_custom_domain ? [1] : []
+        content {
+            name          = var.domain
+            use_subdomain = true
+        }
     }
 
     lifecycle {
