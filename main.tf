@@ -80,11 +80,6 @@ resource "azurerm_storage_account" "storage" {
     account_tier             = "Standard"
     account_replication_type = "LRS"
 
-    custom_domain {
-        name          = var.domain
-        use_subdomain = true
-    }
-
     lifecycle {
         ignore_changes = [
             custom_domain
@@ -96,6 +91,30 @@ resource "azurerm_storage_container" "container" {
     name                  = "$web"
     storage_account_id    = azurerm_storage_account.storage.id
     container_access_type = "private"
+}
+
+resource "azapi_update_resource" "custom_domain" {
+    type      = "Microsoft.Storage/storageAccounts@2021-09-01"
+    resource_id = azurerm_storage_account.storage.id
+
+    body = {
+        properties = {
+            customDomain = {
+                name = var.domain
+                use_subdomain = true
+            }
+        }
+    }
+
+    depends_on = [
+        cloudflare_dns_record.asverify
+    ]
+
+    lifecycle {
+        ignore_changes = [
+            body
+        ]
+    }
 }
 
 
