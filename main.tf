@@ -99,3 +99,16 @@ resource "azurerm_storage_container" "container" {
     storage_account_id    = azurerm_storage_account.storage.id
     container_access_type = "private"
 }
+
+
+# Cloudflare DNS settings
+
+resource "cloudflare_dns_record" "asverify" {
+    zone_id = var.zone_id
+    name = "asverify.${var.domain}"
+    content = "asverify.${azurerm_storage_account.storage.primary_web_host}"
+    type = "CNAME"
+    ttl = 1
+    proxied = false
+    comment "azverify CNAME record for custom domain on storage account"
+}
