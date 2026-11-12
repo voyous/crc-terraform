@@ -6,13 +6,12 @@ Infrastructure as Code for my Cloud Resume Challenge, built using Terraform and 
 
 - Azure resource group (`crc-resume-website`) in Australia East
 - Azure Storage Account (`crcwebsitesa01`) using Standard/LRS
+- Manage DNS for [resume.voyous.dev](https://resume.voyous.dev) with Cloudflare and Terraform
 - Private `$web` storage container
 - Azure Storage static website hosting
 - Live website: [resume.voyous.dev](https://resume.voyous.dev)
 
 ## Planned infrastructure
-
-- Manage DNS for [resume.voyous.dev](https://resume.voyous.dev) with Cloudflare and Terraform
 - Cloudflare CDN and security configuration
 - Azure Functions
 - Azure Cosmos DB
