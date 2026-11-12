@@ -1,6 +1,3 @@
-# import 
-
-
 # Set up providers
 
 terraform {
@@ -101,7 +98,7 @@ resource "azapi_update_resource" "custom_domain" {
         properties = {
             customDomain = {
                 name = var.domain
-                use_subdomain = true
+                useSubDomainName = true
             }
         }
     }
