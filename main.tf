@@ -27,32 +27,44 @@ provider "cloudflare" {
 
 variable "zone_id" {
     description = "Cloudflare Zone ID"
-    type       = string
-    sensitive  = true
+    type        = string
+    sensitive   = true
 }
 
 variable "account_id" {
     description = "Cloudflare Account ID"
-    type       = string
-    sensitive  = true
+    type        = string
+    sensitive   = true
 }
 
 variable "domain" {
     description = "Domain name"
-    type       = string
-    default    = "example.com"
+    type        = string
+    default     = "example.com"
+}
+
+variable "website_rg_name" {
+    description = "Website resource group name"
+    type        = string
+    default     = "crc-resume-website"
+}
+
+variable "website_sa_name" {
+    description = "Storage account name"
+    type        = string
+    default     = "crcwebsitesa01"
 }
 
 
 # Storage account setup
 
 resource "azurerm_resource_group" "website" {
-    name     = "crc-resume-website"
+    name     = var.website_rg_name
     location = "Australia East"
 }
 
 resource "azurerm_storage_account" "storage" {
-    name                     = "crcwebsitesa01"
+    name                     = var.website_sa_name
     resource_group_name      = azurerm_resource_group.website.name
     location                 = azurerm_resource_group.website.location
     account_tier             = "Standard"
