@@ -1,8 +1,15 @@
+# Set up providers
+
 terraform {
     required_providers {
         azurerm = {
             source  = "hashicorp/azurerm"
             version = "=5.0.0"
+        }
+
+        cloudflare = {
+            source  = "cloudflare/cloudflare"
+            version = "~> 5"
         }
     }
 }
@@ -10,6 +17,34 @@ terraform {
 provider "azurerm" {
     features {}
 }
+
+provider "cloudflare" {
+    # API Token to be read from environment variable
+}
+
+
+# Variables
+
+variable "zone_id" {
+    description = "Cloudflare Zone ID"
+    type       = string
+    sensitive  = true
+}
+
+variable "account_id" {
+    description = "Cloudflare Account ID"
+    type       = string
+    sensitive  = true
+}
+
+variable "domain" {
+    description = "Domain name"
+    type       = string
+    default    = "example.com"
+}
+
+
+# Storage account setup
 
 resource "azurerm_resource_group" "website" {
     name     = "crc-resume-website"
@@ -24,7 +59,7 @@ resource "azurerm_storage_account" "storage" {
     account_replication_type = "LRS"
 
     custom_domain {
-        name = "resume.voyous.dev"
+        name          = var.domain
         use_subdomain = true
     }
 
@@ -36,7 +71,7 @@ resource "azurerm_storage_account" "storage" {
 }
 
 resource "azurerm_storage_container" "container" {
-    name = "$web"
-    storage_account_id = azurerm_storage_account.storage.id
+    name                  = "$web"
+    storage_account_id    = azurerm_storage_account.storage.id
     container_access_type = "private"
 }
