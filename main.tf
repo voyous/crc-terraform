@@ -1,4 +1,4 @@
-import 
+# import 
 
 
 # Set up providers
@@ -8,6 +8,10 @@ terraform {
         azurerm = {
             source  = "hashicorp/azurerm"
             version = "=5.0.0"
+        }
+
+        azapi = {
+            source = "Azure/azapi"
         }
 
         cloudflare = {
@@ -21,18 +25,15 @@ provider "azurerm" {
     features {}
 }
 
+provider "azapi" {
+}
+
 provider "cloudflare" {
     # API Token to be read from environment variable
 }
 
 
 # Variables
-
-variable "enable_custom_domain" {
-    description = "Enable or disable custom domain for storage account"
-    type        = bool
-    default     = false
-}
 
 variable "zone_id" {
     description = "Cloudflare Zone ID"
@@ -79,12 +80,9 @@ resource "azurerm_storage_account" "storage" {
     account_tier             = "Standard"
     account_replication_type = "LRS"
 
-    dynamic "custom_domain" {
-        for_each = var.enable_custom_domain ? [1] : []
-        content {
-            name          = var.domain
-            use_subdomain = true
-        }
+    custom_domain {
+        name          = var.domain
+        use_subdomain = true
     }
 
     lifecycle {
@@ -110,5 +108,5 @@ resource "cloudflare_dns_record" "asverify" {
     type = "CNAME"
     ttl = 1
     proxied = false
-    comment "azverify CNAME record for custom domain on storage account"
+    comment = "azverify CNAME record for custom domain on storage account"
 }
