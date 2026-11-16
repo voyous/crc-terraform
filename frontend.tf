@@ -55,3 +55,8 @@ resource "azapi_update_resource" "custom_domain" {
     ]
   }
 }
+
+resource "azurerm_storage_account_static_website" "static_website" {
+  storage_account_id = azurerm_storage_account.storage.id
+  index_document = "index.html"
+}
