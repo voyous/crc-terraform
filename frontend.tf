@@ -26,6 +26,12 @@ resource "azurerm_storage_container" "container" {
   container_access_type = "private"
 }
 
+resource "time_sleep" "wait_for_dns" {
+  depends_on = [cloudflare_dns_record.asverify]
+
+  create_duration = "45s"
+}
+
 resource "azapi_update_resource" "custom_domain" {
   type        = "Microsoft.Storage/storageAccounts@2021-09-01"
   resource_id = azurerm_storage_account.storage.id
@@ -40,7 +46,7 @@ resource "azapi_update_resource" "custom_domain" {
   }
 
   depends_on = [
-    cloudflare_dns_record.asverify
+    time_sleep.wait_for_dns
   ]
 
   lifecycle {

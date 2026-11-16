@@ -3,7 +3,7 @@
 resource "cloudflare_dns_record" "asverify" {
   zone_id = var.zone_id
   name    = "asverify.${var.domain}"
-  content = "asverify.${azurerm_storage_account.storage.primary_web_host}"
+  content = "asverify.${azurerm_storage_account.storage.primary_blob_host}"
   type    = "CNAME"
   ttl     = 1
   proxied = false
