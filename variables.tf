@@ -65,3 +65,21 @@ variable "api_fa_name" {
   type        = string
   default     = ""
 }
+
+variable "db_account_name" {
+  description = "DB account name"
+  type        = string
+  default     = ""
+}
+
+variable "db_name" {
+  description = "Database name"
+  type        = string
+  default     = ""
+}
+
+variable "db_container_name" {
+  description = "Database container name"
+  type        = string
+  default     = ""
+}
