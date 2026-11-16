@@ -18,14 +18,32 @@ variable "domain" {
   default     = "example.com"
 }
 
+variable "location" {
+    description = "Azure region value"
+    type = string
+    default = "West US"
+}
+
 variable "website_rg_name" {
   description = "Website resource group name"
   type        = string
-  default     = "crc-resume-website"
+  default     = ""
 }
 
 variable "website_sa_name" {
   description = "Storage account name"
   type        = string
-  default     = "crcwebsitesa01"
+  default     = ""
+}
+
+variable "api_rg_name" {
+  description = "API resource group name"
+  type        = string
+  default     = ""
+}
+
+variable "api_sa_name" {
+  description = "API storage account name"
+  type        = string
+  default     = ""
 }
