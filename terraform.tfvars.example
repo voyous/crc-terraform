@@ -1,0 +1,34 @@
+# Custom Domain Name
+domain     = "example.com"
+
+
+# Set Azure region
+location   = "West US"
+
+
+# Cloudflare IDs: https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/
+zone_id    = "<Your Cloudflare Zone ID>"
+account_id = "<Your Cloudflare Account ID>"
+
+
+# Front-end Azure resource names
+# Note: storage account name must be globally unique
+website_sa_name = "storageaccountname12341"
+website_rg_name = "resource-group-name-website"
+
+
+# API resource names
+# Note: storage account and function app name must be globally unique
+# Note: Resource group name must be unique to front-end resource group name
+api_rg_name  = "resource-group-name-api"
+api_sa_name  = "storageaccountname12342"
+api_sc_name  = "app-package-fa-name"
+api_asp_name = "ASP-appservicename"
+api_fa_name  = "ap-function-app-name"
+
+
+# Database resource names
+# Note: db account name must be globally unique
+db_account_name   = "api-db-account-name"
+db_name           = "main-db-name"
+db_container_name = "db-container-name"
