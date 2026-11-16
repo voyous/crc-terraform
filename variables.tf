@@ -19,9 +19,9 @@ variable "domain" {
 }
 
 variable "location" {
-    description = "Azure region value"
-    type = string
-    default = "West US"
+  description = "Azure region value"
+  type        = string
+  default     = "West US"
 }
 
 variable "website_rg_name" {
@@ -44,6 +44,24 @@ variable "api_rg_name" {
 
 variable "api_sa_name" {
   description = "API storage account name"
+  type        = string
+  default     = ""
+}
+
+variable "api_sc_name" {
+  description = "API storage container name"
+  type        = string
+  default     = ""
+}
+
+variable "api_asp_name" {
+  description = "API app service plan name"
+  type        = string
+  default     = ""
+}
+
+variable "api_fa_name" {
+  description = "API function app name"
   type        = string
   default     = ""
 }
